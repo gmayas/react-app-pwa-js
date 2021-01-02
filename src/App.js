@@ -1,25 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://localhost:4001";
+//http://localhost:3000/
 
 function App() {
+  const [response, setResponse] = useState(null);
+
+  useEffect(() => {
+    var connectionOptions = {
+      "force new connection": true,
+      reconnectionAttempts: "Infinity",
+      timeout: 10000,
+      transports: ["websocket"],
+    };
+
+    const socket = socketIOClient(ENDPOINT, connectionOptions);
+    socket.on("FromAPI", (data) => {
+      console.log("FromAPI: ", data);
+      setResponse(data);
+    });
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <p>
+      It's <time dateTime={response}>{response}</time>
+    </p>
   );
 }
 
