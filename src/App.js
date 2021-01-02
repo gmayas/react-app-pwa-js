@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://localhost:4001";
-//http://localhost:3000/
 
 function App() {
   const [response, setResponse] = useState(null);
