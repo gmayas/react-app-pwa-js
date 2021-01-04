@@ -12,6 +12,8 @@ import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import 'reactjs-toastr/lib/react-toast';
+
 
 ReactDOM.render(
   <React.StrictMode>
