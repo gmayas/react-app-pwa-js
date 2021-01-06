@@ -9,22 +9,31 @@ const Login = (props) => {
   // Se definen las tareas
   const [users, setUsers] = useState([]);
 
-  useEffect( async() => {
-      setNewUser("");
-      setUsers([]);
-      console.log('Si pasa...')
-      await logout();
+  useEffect(async () => {
+    setNewUser("");
+    setUsers([]);
+    console.log("Si pasa...");
+    await logout();
   }, []);
 
   // Control de summit y eventos de las paginas HTLM de tipo Form
   const handleSummit = async (e) => {
     e.preventDefault(); // Evita que se refresque la pantalla
     // addUser(newUser);
-    const socket = await socketBackEnd();
-    socket.emit("login user", newUser, async (res) => {
-      await login(res);
+    var req;
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      req = {
+        nickName: newUser,
+        position: { lat: pos.coords.latitude, lng: pos.coords.longitude },
+        online: true,
+      };
+      console.log("Login user req: ", req);
+      const socket = await socketBackEnd();
+      socket.emit("login user", req, async (res) => {
+        await login(res);
+      });
+      props.history.push("/map");
     });
-    props.history.push("/map");
   };
   //
   const addUser = (name) => {
