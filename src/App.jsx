@@ -4,7 +4,9 @@ import socketBackEnd from "./filesJS/socketBackEnd";
 import { login, setMessageUser } from "./filesJS/userSubject";
 import MapView from "./components/MapView";
 import NavBar from "./components/NavBar";
+import Login from "./components/Login";
 import "./App.css";
+
 
 function App() {
   useEffect(async () => {
@@ -12,18 +14,14 @@ function App() {
     socket.on("new connection", async (res) => {
       await setMessageUser(res);
     });
-    socket.emit("login user", "Gabriel", async (res) => {
-      await login(res);
-    });
   }, []);
 
   return (
     <Router>
       <NavBar />
       <Switch>
-        <Route path="/">
-          <MapView />
-        </Route>
+        <Route path="/" exact component={Login} />
+        <Route path="/map" exact component={MapView} />
       </Switch>
     </Router>
   );
