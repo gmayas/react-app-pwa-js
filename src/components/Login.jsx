@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import socketBackEnd from "../filesJS/socketBackEnd";
-import { login, logout } from "../filesJS/userSubject";
+import { login, logout, getCurrentUser, currentUser} from "../filesJS/userSubject";
 
 const Login = (props) => {
   const userInput = useRef(null);
@@ -8,31 +8,47 @@ const Login = (props) => {
   const [newUser, setNewUser] = useState("");
   // Se definen las tareas
   const [users, setUsers] = useState([]);
-
   useEffect(async () => {
     setNewUser("");
     setUsers([]);
     console.log("Si pasa...");
-    await logout();
+    const userData = await getCurrentUser();
+    let req = {
+      nickName: userData?.nickName,
+      position: [],
+      online: false,
+    };
+    const socket = await socketBackEnd();
+    socket.emit("userLogout", req, async (res) => {
+      console.log("userLogout res: ", res);
+      await logout();
+    });
   }, []);
 
   // Control de summit y eventos de las paginas HTLM de tipo Form
   const handleSummit = async (e) => {
+    var isOk = false;
     e.preventDefault(); // Evita que se refresque la pantalla
     // addUser(newUser);
-    var req;
     navigator.geolocation.getCurrentPosition(async (pos) => {
-      req = {
+    let req = {
         nickName: newUser,
-        position: { lat: pos.coords.latitude, lng: pos.coords.longitude },
+        position: [pos.coords.latitude, pos.coords.longitude],
         online: true,
       };
       console.log("Login user req: ", req);
       const socket = await socketBackEnd();
-      socket.emit("login user", req, async (res) => {
+      await socket.emit("login user", req, async (res) => {
+        console.log("login user res: ", res);
+        console.log("login user isOk: ", isOk);
+        isOk = res?.Ok
         await login(res);
       });
-      props.history.push("/map");
+      setTimeout(async() => {
+        const userData = await getCurrentUser();
+        console.log("Login user userData XXX: ", userData);
+        if (userData.Ok == true) {props.history.push("/map")};
+      }, 5000)
     });
   };
   //
