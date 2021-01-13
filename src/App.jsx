@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import socketBackEnd from "./filesJS/socketBackEnd";
-import { login, setMessageUser } from "./filesJS/userSubject";
-import MapView from "./components/MapView";
+import { setMessageUser } from "./filesJS/userSubject";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
+import Main from "./components/Main";
 import "./App.css";
-
 
 function App() {
   useEffect(async () => {
@@ -18,10 +17,10 @@ function App() {
 
   return (
     <Router>
-      <NavBar />
+      <NavBar/>
       <Switch>
         <Route path="/" exact component={Login} />
-        <Route path="/map" exact component={MapView} />
+        <Route path="/main" exact component={Main} />
       </Switch>
     </Router>
   );

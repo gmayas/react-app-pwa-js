@@ -1,6 +1,7 @@
 body {
-  padding: 0%;
-  margin: 0%;
+  background: #0c0c14;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .selector-for-some-widget {
@@ -14,12 +15,53 @@ body {
 }
 
 .leaflet-container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 
 #mapid{
-  display: block;
-  width: 100vw;
-  height: 100vh;
+  width: 98%;
+  height: 100%;
+ 
+}  
+
+.mapContn{
+  width: 90vh;
+  height: 90vh;
+  
+}
+
+#nickWrap {
+  display: grid;
+  position: absolute
+}
+
+#contentWrap {
+  display: grid;
+}
+
+#chat{
+  overflow-y: scroll;
+  height: 20em;
+}
+
+#userNames{
+  overflow-y: scroll;
+  width: 19.4em;
+  height: 4em;
+}
+
+.error {
+  color: red;
+}
+
+.whisper {
+  color: gray;
+  font-style: italic;
+}
+
+.new-user {
+  color:blue;
+  font-style: italic;
 }

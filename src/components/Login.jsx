@@ -12,7 +12,8 @@ const Login = (props) => {
     setNewUser("");
     setUsers([]);
     console.log("Si pasa...");
-    const userData = await getCurrentUser();
+    //const userData = await getCurrentUser();
+    const userData = await currentUser.value;
     let req = {
       nickName: userData?.nickName,
       position: [],
@@ -20,7 +21,7 @@ const Login = (props) => {
     };
     const socket = await socketBackEnd();
     socket.emit("userLogout", req, async (res) => {
-      console.log("userLogout res: ", res);
+      //console.log("userLogout res: ", res);
       await logout();
     });
   }, []);
@@ -36,18 +37,17 @@ const Login = (props) => {
         position: [pos.coords.latitude, pos.coords.longitude],
         online: true,
       };
-      console.log("Login user req: ", req);
+      //console.log("Login user req: ", req);
       const socket = await socketBackEnd();
       await socket.emit("login user", req, async (res) => {
         console.log("login user res: ", res);
-        console.log("login user isOk: ", isOk);
         isOk = res?.Ok
         await login(res);
       });
       setTimeout(async() => {
         const userData = await getCurrentUser();
-        console.log("Login user userData XXX: ", userData);
-        if (userData.Ok == true) {props.history.push("/map")};
+        //console.log("Login user userData XXX: ", userData);
+        if (userData.Ok == true) {props.history.push("/main")};
       }, 5000)
     });
   };
@@ -90,7 +90,7 @@ const Login = (props) => {
                 </div>
                 <button
                   type="submit"
-                  className="btn btn-primary btn-block mt-2"
+                  className="btn  btn-success btn-block mt-2"
                   data-toggle="tooltip"
                   data-placement="bottom"
                   title="Login"

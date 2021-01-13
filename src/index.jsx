@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
-import "bootswatch/dist/darkly/bootstrap.min.css";
+import "bootswatch/dist/slate/bootstrap.min.css";
 import "jquery";
 import "popover.js";
 import "popper.js";
