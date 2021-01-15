@@ -1,31 +1,30 @@
 import React, { useEffect } from "react";
 import L from "leaflet";
 import { LocationIcon } from "./LocationIcon";
-import { getCurrentUser, currentUser } from "../../../filesJS/userSubject";
-import socketBackEnd from "../../../filesJS/socketBackEnd";
-//var _ = require("lodash");
+import { getCurrentUser, currentUser } from "../../filesJS/userSubject";
+import socketBackEnd from "../../filesJS/socketBackEnd";
 import * as _ from "lodash";
 import "leaflet/dist/leaflet.css";
 
 const MapView = () => {
   var position = {};
   var locationfound = {};
-  var newPostion = false;
+  //var newPostion = false;
 
-  useEffect(async () => {
+  useEffect( () => {
     navigator.geolocation.watchPosition(
       async (pos) => {
-        newPostion = true;
-        console.log("newPostion:", newPostion);
+        //newPostion = true;
+        //console.log("newPostion:", newPostion);
         locationfound.LatLng = [pos.coords.latitude, pos.coords.longitude];
-        console.log("locationfound:", locationfound);
+        //console.log("locationfound:", locationfound);
         const userData = await currentUser.value;
         //console.log("userData:", userData);
         position = {
           userData,
           LatLng: locationfound.LatLng,
         };
-        console.log("position:", position);
+        //console.log("position:", position);
         const socket = await socketBackEnd();
         socket.emit("userCoordinates", position);
       },
@@ -41,15 +40,15 @@ const MapView = () => {
   useEffect(async () => {
     const map = L.map("mapid");
     const socket = await socketBackEnd();
-    socket.on("userListRefresh", (userList) => {
-      console.log("userListRefresh ", true);
+    socket.on("userListRefreshMap", (userList) => {
+      //console.log("userListRefreshMap ", true);
       MapFunction(map, userList);
       userList = [];
     });
   }, []);
 
-  const MapFunction = async (map, userList) => {
-    setTimeout(async () => {
+  const MapFunction = (map, userList) => {
+    setTimeout(() => {
       map.eachLayer((layer) => {
         layer.remove();
       });
@@ -77,7 +76,7 @@ const MapView = () => {
           .bindPopup(`User: ${v.nickName}`)
           .openPopup();
       });
-      newPostion = false;
+      //newPostion = false;
     }, 5000);
   };
 
