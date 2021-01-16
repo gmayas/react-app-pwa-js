@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Chat from "../components/Chat/Chat";
+import Chat from "../components/ChatComponent/Chat/Chat";
 import MapView from "../components/Map/MapView";
 
 const Main = () => {

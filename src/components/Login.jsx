@@ -40,7 +40,7 @@ const Login = (props) => {
       //console.log("Login user req: ", req);
       const socket = await socketBackEnd();
       await socket.emit("login user", req, async (res) => {
-        console.log("login user res: ", res);
+        //console.log("login user res: ", res);
         isOk = res?.Ok
         await login(res);
       });
