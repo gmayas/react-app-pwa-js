@@ -1,17 +1,22 @@
 import React, { useEffect, useState, useRef } from "react";
 import socketBackEnd from "../filesJS/socketBackEnd";
-import { login, logout, getCurrentUser, currentUser} from "../filesJS/userSubject";
+import {
+  login,
+  logout,
+  getCurrentUser,
+  currentUser,
+  messageUser
+} from "../filesJS/userSubject";
 
 const Login = (props) => {
   const userInput = useRef(null);
   // Se define el estado de los usuarios en este componente
   const [newUser, setNewUser] = useState("");
-  // Se definen las tareas
-  const [users, setUsers] = useState([]);
+  const [newMsg, setNewMsg] = useState("");
+  const [newMsgErr, setNewMsgErr] = useState("");
   useEffect(async () => {
     setNewUser("");
-    setUsers([]);
-    console.log("Si pasa...");
+    setNewMsg("");
     //const userData = await getCurrentUser();
     const userData = await currentUser.value;
     let req = {
@@ -24,6 +29,10 @@ const Login = (props) => {
       //console.log("userLogout res: ", res);
       await logout();
     });
+    setTimeout(async () => {
+      const mesgeUser = await messageUser.value;
+      setNewMsg(mesgeUser);
+    }, 1000);
   }, []);
 
   // Control de summit y eventos de las paginas HTLM de tipo Form
@@ -32,7 +41,7 @@ const Login = (props) => {
     e.preventDefault(); // Evita que se refresque la pantalla
     // addUser(newUser);
     navigator.geolocation.getCurrentPosition(async (pos) => {
-    let req = {
+      let req = {
         nickName: newUser,
         position: [pos.coords.latitude, pos.coords.longitude],
         online: true,
@@ -41,32 +50,19 @@ const Login = (props) => {
       const socket = await socketBackEnd();
       await socket.emit("login user", req, async (res) => {
         //console.log("login user res: ", res);
-        isOk = res?.Ok
+        isOk = res?.Ok;
         await login(res);
       });
-      setTimeout(async() => {
+      setTimeout(async () => {
         const userData = await getCurrentUser();
-        //console.log("Login user userData XXX: ", userData);
-        if (userData.Ok == true) {props.history.push("/main")};
-      }, 5000)
+        console.log("Login user userData: ", userData);
+        if (userData.Ok == true) {
+          props.history.push("/main");
+        } else {
+          setNewMsgErr(userData.msg)
+        }
+      }, 1000);
     });
-  };
-  //
-  const addUser = (name) => {
-    const newUsers = [...users, { name, done: false }];
-    setUsers(newUsers);
-  };
-
-  const toggleleDoneUser = (i) => {
-    const newUsersCopy = [...users];
-    newUsersCopy[i].done = !newUsersCopy[i].done;
-    setUsers(newUsersCopy);
-  };
-
-  const removeUser = (i) => {
-    const newUsersCopy = [...users];
-    newUsersCopy.splice(i, 1);
-    setUsers(newUsersCopy);
   };
 
   return (
@@ -102,6 +98,20 @@ const Login = (props) => {
               </form>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-6 offset-md-3 ">
+          <h5 className="text-info text-center mt-5">
+            {newMsg}
+          </h5>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-6 offset-md-3 ">
+          <h5 className="text-danger text-center mt-5">
+            {newMsgErr}
+          </h5>
         </div>
       </div>
     </div>

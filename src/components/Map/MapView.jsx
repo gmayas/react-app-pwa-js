@@ -48,7 +48,6 @@ const MapView = () => {
   }, []);
 
   const MapFunction = (map, userList) => {
-    setTimeout(() => {
       map.eachLayer((layer) => {
         layer.remove();
       });
@@ -74,10 +73,10 @@ const MapView = () => {
         L.marker(v.position, { icon: LocationIcon })
           .addTo(map)
           .bindPopup(`User: ${v.nickName}`)
-          .openPopup();
+          //.openPopup();
+          
       });
       //newPostion = false;
-    }, 5000);
   };
 
   return <div id="mapid"></div>;

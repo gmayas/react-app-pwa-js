@@ -5,6 +5,7 @@ import { currentUser } from "../../../filesJS/userSubject";
 import TextContainer from "../TextContainer/TextContainer";
 import Messages from "../Messages/Messages";
 import Input from "../Input/Input";
+import InfoBar from "../InfoBar/InfoBar";
 
 const Chat = () => {
   const [name, setName] = useState("");
@@ -12,11 +13,13 @@ const Chat = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-
   useEffect(async () => {
     const userData = await currentUser.value;
     //console.log("userData: ", userData);
     setName(userData.nickName);
+  }, []);
+
+  useEffect(async () => {
     const socket = await socketBackEnd();
     socket.on("message", (message) => {
       console.log("message: ", message);
@@ -25,12 +28,27 @@ const Chat = () => {
   }, []);
 
   useEffect(async () => {
+    const userData = await currentUser.value;
     const socket = await socketBackEnd();
-    socket.on("roomData", (userList) => {
-      setTimeout(() => {
-        //console.log("userList roomData: ", userList);
-      }, 2000);
-      //setUsers(users);
+    const nickName = userData.nickName;
+    await socket.emit("getRoomData", nickName, (res) => {
+      console.log("getRoomData res: ", res);
+    });
+  }, []);
+
+  useEffect(async () => {
+    const socket = await socketBackEnd();
+    await socket.on("roomData", (userList) => {
+      console.log("userList roomData: ", userList);
+      setUsers(userList);
+    });
+  }, []);
+
+  useEffect(async () => {
+    const socket = await socketBackEnd();
+    await socket.emit("loadoldmsgs", true, (messages) => {
+      console.log("loadoldmsgs res: ", messages);
+      setMessages(messages);
     });
   }, []);
 
@@ -40,18 +58,20 @@ const Chat = () => {
     if (message) {
       const req = {
         name,
-        message
-      }
+        message,
+      };
       const socket = await socketBackEnd();
       await socket.emit("sendMessage", req, () => setMessage(""));
     }
   };
 
   //console.log("messages: ", messages);
+  //<TextContainer users={users} />
 
   return (
     <div className="outerContainerChat">
       <div className="containerChat">
+       <InfoBar dataIn={name} />
         <Messages messages={messages} name={name} />
         <Input
           message={message}
