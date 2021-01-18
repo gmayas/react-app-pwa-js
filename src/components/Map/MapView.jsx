@@ -67,9 +67,9 @@ const MapView = () => {
     .openPopup();*/
       userList.map((v, i, a) => {
         // Elemento devuelto de nuevo_array
-        if (v.nickName === "Gab") {
-          v.position = [21.161908, -86.842020202];
-        }
+        //if (v.nickName === "Gab") {
+          //v.position = [21.161908, -86.842020202];
+        //}
         L.marker(v.position, { icon: LocationIcon })
           .addTo(map)
           .bindPopup(`User: ${v.nickName}`)
