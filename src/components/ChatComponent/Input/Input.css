@@ -12,22 +12,6 @@
   font-size: 1.2em;
 }
 
-
-.btn-success {
-  color: #fff !important;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 20px;
-  display: inline-block;
-  border: none;
-  width: 20%;
- 
-}
-
-input:focus, textarea:focus, select:focus{
-  outline: none;
-}
-
 .sendButton {
   color: #fff !important;
   text-transform: uppercase;
@@ -38,5 +22,11 @@ input:focus, textarea:focus, select:focus{
   border: none;
   width: 20%;
 }
+
+input:focus, textarea:focus, select:focus{
+  outline: none;
+}
+
+
 
 
