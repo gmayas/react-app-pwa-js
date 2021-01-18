@@ -4,7 +4,7 @@ import {
   login,
   logout,
   currentUser,
-  messageUser
+  messageUser,
 } from "../filesJS/userSubject";
 
 const Login = (props) => {
@@ -50,7 +50,7 @@ const Login = (props) => {
         if (userData.Ok == true) {
           props.history.push("/main");
         } else {
-          setNewMsgErr(userData.msg)
+          setNewMsgErr(userData.msg);
         }
       }, 1000);
     });
@@ -75,17 +75,19 @@ const Login = (props) => {
                     autoFocus
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="btn  btn-success btn-block mt-2"
-                  data-toggle="tooltip"
-                  data-placement="bottom"
-                  title="Login"
-                  data-original-title="Tooltip on bottom"
-                >
-                  <i className="fas fa-location-arrow mr-1"></i>
-                  Login
-                </button>
+                <div className="form-group">
+                  <button
+                    type="submit"
+                    className="btn btn-success btn-block mt-2"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="Login"
+                    data-original-title="Tooltip on bottom"
+                  >
+                    <i className="fas fa-location-arrow mr-1"></i>
+                    Login
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -93,16 +95,12 @@ const Login = (props) => {
       </div>
       <div className="row">
         <div className="col-md-6 offset-md-3 ">
-          <h5 className="text-info text-center mt-5">
-            {newMsg}
-          </h5>
+          <h5 className="text-info text-center mt-5">{newMsg}</h5>
         </div>
       </div>
       <div className="row">
         <div className="col-md-6 offset-md-3 ">
-          <h5 className="text-danger text-center mt-5">
-            {newMsgErr}
-          </h5>
+          <h5 className="text-danger text-center mt-5">{newMsgErr}</h5>
         </div>
       </div>
     </div>
