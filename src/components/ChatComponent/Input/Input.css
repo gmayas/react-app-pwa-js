@@ -21,6 +21,7 @@
   display: inline-block;
   border: none;
   width: 20%;
+  height: 50px;
 }
 
 input:focus, textarea:focus, select:focus{
