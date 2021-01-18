@@ -3,21 +3,18 @@ import socketBackEnd from "../filesJS/socketBackEnd";
 import {
   login,
   logout,
-  getCurrentUser,
   currentUser,
   messageUser
 } from "../filesJS/userSubject";
 
 const Login = (props) => {
   const userInput = useRef(null);
-  // Se define el estado de los usuarios en este componente
   const [newUser, setNewUser] = useState("");
   const [newMsg, setNewMsg] = useState("");
   const [newMsgErr, setNewMsgErr] = useState("");
   useEffect(async () => {
     setNewUser("");
     setNewMsg("");
-    //const userData = await getCurrentUser();
     const userData = await currentUser.value;
     let req = {
       nickName: userData?.nickName,
@@ -26,7 +23,6 @@ const Login = (props) => {
     };
     const socket = await socketBackEnd();
     socket.emit("userLogout", req, async (res) => {
-      //console.log("userLogout res: ", res);
       await logout();
     });
     setTimeout(async () => {
@@ -35,27 +31,22 @@ const Login = (props) => {
     }, 1000);
   }, []);
 
-  // Control de summit y eventos de las paginas HTLM de tipo Form
   const handleSummit = async (e) => {
     var isOk = false;
     e.preventDefault(); // Evita que se refresque la pantalla
-    // addUser(newUser);
     navigator.geolocation.getCurrentPosition(async (pos) => {
       let req = {
         nickName: newUser,
         position: [pos.coords.latitude, pos.coords.longitude],
         online: true,
       };
-      //console.log("Login user req: ", req);
       const socket = await socketBackEnd();
       await socket.emit("login user", req, async (res) => {
-        //console.log("login user res: ", res);
         isOk = res?.Ok;
         await login(res);
       });
       setTimeout(async () => {
-        const userData = await getCurrentUser();
-        console.log("Login user userData: ", userData);
+        const userData = await currentUser.value;
         if (userData.Ok == true) {
           props.history.push("/main");
         } else {

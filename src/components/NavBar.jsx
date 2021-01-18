@@ -1,6 +1,6 @@
 import React from "react";
 
-const NavBar = () => {
+const NavBar = ({msg}) => {
   return (
     <div className="conteiner">
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -24,6 +24,13 @@ const NavBar = () => {
               <a className="nav-link" href="/">
                 Login
                 <span className="sr-only">(current)</span>
+              </a>
+            </li>
+          </ul>
+          <ul className="nav navbar-nav navbar-right">
+            <li className="nav-item active">
+              <a className="nav-link" href="#">
+                { msg }
               </a>
             </li>
           </ul>

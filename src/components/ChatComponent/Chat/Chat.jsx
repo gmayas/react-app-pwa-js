@@ -15,14 +15,12 @@ const Chat = () => {
 
   useEffect(async () => {
     const userData = await currentUser.value;
-    //console.log("userData: ", userData);
     setName(userData.nickName);
   }, []);
 
   useEffect(async () => {
     const socket = await socketBackEnd();
     socket.on("message", (message) => {
-      console.log("message: ", message);
       setMessages((messages) => [...messages, message]);
     });
   }, []);
@@ -32,14 +30,12 @@ const Chat = () => {
     const socket = await socketBackEnd();
     const nickName = userData.nickName;
     await socket.emit("getRoomData", nickName, (res) => {
-      console.log("getRoomData res: ", res);
     });
   }, []);
 
   useEffect(async () => {
     const socket = await socketBackEnd();
     await socket.on("roomData", (userList) => {
-      console.log("userList roomData: ", userList);
       setUsers(userList);
     });
   }, []);
@@ -47,14 +43,12 @@ const Chat = () => {
   useEffect(async () => {
     const socket = await socketBackEnd();
     await socket.emit("loadoldmsgs", true, (messages) => {
-      console.log("loadoldmsgs res: ", messages);
       setMessages(messages);
     });
   }, []);
 
   const sendMessage = async (event) => {
     event.preventDefault();
-
     if (message) {
       const req = {
         name,
@@ -64,9 +58,6 @@ const Chat = () => {
       await socket.emit("sendMessage", req, () => setMessage(""));
     }
   };
-
-  //console.log("messages: ", messages);
-  //<TextContainer users={users} />
 
   return (
     <div className="outerContainerChat">

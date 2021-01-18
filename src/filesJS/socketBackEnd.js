@@ -1,5 +1,5 @@
 import socketIOClient from "socket.io-client";
-const SocketBackEnd = "http://localhost:4001";
+const SocketBackEnd = "https://ioservergmayas.herokuapp.com/";
 
 const socketBackEnd = async () => {
   const connectionOptions = {
