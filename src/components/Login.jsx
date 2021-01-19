@@ -38,7 +38,7 @@ const Login = (props) => {
     e.preventDefault(); // Evita que se refresque la pantalla
     navigator.geolocation.getCurrentPosition(async (pos) => {
       let req = {
-        nickName: newUser,
+        nickName: newUser.trim(),
         position: [pos.coords.latitude, pos.coords.longitude],
         online: true,
       };
