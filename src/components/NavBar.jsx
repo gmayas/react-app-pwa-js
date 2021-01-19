@@ -26,12 +26,6 @@ const NavBar = ({msg}) => {
                 <span className="sr-only">(current)</span>
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/chat">
-                Chat
-                <span className="sr-only">(current)</span>
-              </a>
-            </li>
           </ul>
           <ul className="nav navbar-nav navbar-right">
             <li className="nav-item active">

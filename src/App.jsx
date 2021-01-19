@@ -5,9 +5,7 @@ import { setMessageUser } from "./filesJS/userSubject";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 import Main from "./components/Main";
-import Chat from "./components/ChatComponent/Chat/Chat";
 import "./App.css";
-
 
 function App() {
   
@@ -27,7 +25,6 @@ function App() {
       <Switch>
         <Route path="/" exact component={Login} />
         <Route path="/main" exact component={Main} />
-        <Route path="/chat" exact component={Chat} />
       </Switch>
     </Router>
   );
