@@ -9,39 +9,35 @@ import "leaflet/dist/leaflet.css";
 const MapView = () => {
   var position = {};
   var locationfound = {};
-  //var newPostion = false;
 
-  useEffect( () => {
-    navigator.geolocation.watchPosition(
-      async (pos) => {
-        //newPostion = true;
-        //console.log("newPostion:", newPostion);
-        locationfound.LatLng = [pos.coords.latitude, pos.coords.longitude];
-        //console.log("locationfound:", locationfound);
-        const userData = await currentUser.value;
-        //console.log("userData:", userData);
-        position = {
-          userData,
-          LatLng: locationfound.LatLng,
-        };
-        //console.log("position:", position);
-        const socket = await socketBackEnd();
-        socket.emit("userCoordinates", position);
-      },
-      (error) => {
-        console.error("Error Code = " + error.code + " - " + error.message);
-      },
-      {
-        enableHighAccuracy: true,
-      }
-    );
+  useEffect(async  () => {
+    const userData = await getCurrentUser();
+    if ( userData.Ok ) {
+      navigator.geolocation.watchPosition(
+        async (pos) => {
+          locationfound.LatLng = [pos.coords.latitude, pos.coords.longitude];
+          position = {
+            userData,
+            LatLng: locationfound.LatLng,
+          };
+          const socket = await socketBackEnd();
+          socket.emit("userCoordinates", position);
+        },
+        (error) => {
+          console.error("Error Code = " + error.code + " - " + error.message);
+        },
+        {
+          enableHighAccuracy: true,
+        }
+      );
+    }
+   
   }, []);
 
   useEffect(async () => {
     const map = L.map("mapid");
     const socket = await socketBackEnd();
     socket.on("userListRefreshMap", (userList) => {
-      //console.log("userListRefreshMap ", true);
       MapFunction(map, userList);
       userList = [];
     });
@@ -66,17 +62,11 @@ const MapView = () => {
     .bindPopup('You are here.')
     .openPopup();*/
       userList.map((v, i, a) => {
-        // Elemento devuelto de nuevo_array
-        //if (v.nickName === "Gab") {
-          //v.position = [21.161908, -86.842020202];
-        //}
         L.marker(v.position, { icon: LocationIcon })
           .addTo(map)
           .bindPopup(`User: ${v.nickName}`)
           //.openPopup();
-          
       });
-      //newPostion = false;
   };
 
   return <div id="mapid"></div>;

@@ -21,7 +21,6 @@ const login = (dataUser) => {
 };
 
 const logout = () => {
-  console.log('removeItem')
   localStorage.removeItem("currentUser");
   currentUser.next(null);
   authState.next(false);

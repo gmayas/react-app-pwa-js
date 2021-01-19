@@ -4,6 +4,7 @@ import {
   login,
   logout,
   currentUser,
+  getCurrentUser,
   messageUser
 } from "../filesJS/userSubject";
 
@@ -15,7 +16,8 @@ const Login = (props) => {
   useEffect(async () => {
     setNewUser("");
     setNewMsg("");
-    const userData = await currentUser.value;
+    const userData = await getCurrentUser();
+    //const userData = await currentUser.value;
     let req = {
       nickName: userData?.nickName,
       position: [],
@@ -46,7 +48,8 @@ const Login = (props) => {
         await login(res);
       });
       setTimeout(async () => {
-        const userData = await currentUser.value;
+        const userData = await getCurrentUser();
+        //const userData = await currentUser.value;
         if (userData.Ok == true) {
           props.history.push("/main");
         } else {

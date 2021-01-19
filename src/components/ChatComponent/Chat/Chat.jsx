@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import socketBackEnd from "../../../filesJS/socketBackEnd";
-import { currentUser } from "../../../filesJS/userSubject";
+import { currentUser, getCurrentUser } from "../../../filesJS/userSubject";
 
 import TextContainer from "../TextContainer/TextContainer";
 import Messages from "../Messages/Messages";
@@ -14,7 +14,8 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(async () => {
-    const userData = await currentUser.value;
+    const userData = await getCurrentUser();
+    //const userData = await currentUser.value;
     setName(userData.nickName);
   }, []);
 
@@ -26,7 +27,8 @@ const Chat = () => {
   }, []);
 
   useEffect(async () => {
-    const userData = await currentUser.value;
+    const userData = await getCurrentUser();
+    //const userData = await currentUser.value;
     const socket = await socketBackEnd();
     const nickName = userData.nickName;
     await socket.emit("getRoomData", nickName, (res) => {
