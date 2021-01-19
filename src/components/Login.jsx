@@ -19,6 +19,7 @@ const Login = (props) => {
     const userData = await getCurrentUser();
     //const userData = await currentUser.value;
     let req = {
+      idUser:  userData?.idUser,
       nickName: userData?.nickName,
       position: [],
       online: false,
