@@ -13,7 +13,7 @@ const MapView = () => {
   useEffect(async  () => {
     const userData = await getCurrentUser();
     if ( userData.Ok ) {
-      navigator.geolocation.watchPosition(
+      navigator.geolocation.getCurrentPosition(
         async (pos) => {
           locationfound.LatLng = [pos.coords.latitude, pos.coords.longitude];
           position = {
@@ -54,7 +54,7 @@ const MapView = () => {
         coords = locationfound.LatLng;
       }
       const today = new Date();
-      map.setView(coords, 13);
+      map.setView(coords, 10);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> by GMayaS © ${today.getFullYear()}`,
       }).addTo(map);
