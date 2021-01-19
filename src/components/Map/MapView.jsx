@@ -54,7 +54,7 @@ const MapView = () => {
         coords = locationfound.LatLng;
       }
       const today = new Date();
-      map.setView(coords, 10);
+      map.setView(coords, 5);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> by GMayaS © ${today.getFullYear()}`,
       }).addTo(map);
