@@ -51,10 +51,13 @@ const Chat = () => {
 
   const sendMessage = async (event) => {
     event.preventDefault();
-    if (message) {
+   // console.log('Chat message length: ', message.length)
+    let msg = message.trim();
+    //console.log('Chat msg length: ', msg.length)
+    if (msg.length > 0) {
       const req = {
         name,
-        message,
+        message: msg,
       };
       const socket = await socketBackEnd();
       await socket.emit("sendMessage", req, () => setMessage(""));

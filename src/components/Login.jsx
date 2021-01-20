@@ -73,7 +73,7 @@ const Login = (props) => {
                     type="text"
                     className="form-control"
                     placeholder="User name"
-                    onChange={(e) => setNewUser(e.target.value)}
+                    onChange={(e) => setNewUser(e.target.value.trim())}
                     value={newUser}
                     ref={userInput}
                     autoComplete="none"
