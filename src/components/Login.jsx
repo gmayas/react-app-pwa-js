@@ -18,6 +18,7 @@ const Login = (props) => {
     setNewMsg("");
     const userData = await getCurrentUser();
     //const userData = await currentUser.value;
+    //console.log('userLogout userData: ', userData)
     let req = {
       idUser:  userData?.idUser,
       nickName: userData?.nickName,
