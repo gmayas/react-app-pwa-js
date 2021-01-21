@@ -13,6 +13,9 @@ const Login = (props) => {
   const [newUser, setNewUser] = useState("");
   const [newMsg, setNewMsg] = useState("");
   const [newMsgErr, setNewMsgErr] = useState("");
+  const today = new Date();
+  const GMayaS = `© ${today.getFullYear()} Copyright: GMayaS C:\\>Desarrollo en Sistemas.`
+
   useEffect(async () => {
     setNewUser("");
     setNewMsg("");
@@ -107,6 +110,13 @@ const Login = (props) => {
         <div className="col-md-6 offset-md-3 ">
           <h5 className="text-danger text-center mt-5">
             {newMsgErr}
+          </h5>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-6 offset-md-3 ">
+          <h5 className="text-secondary text-center mt-5">
+            {GMayaS}
           </h5>
         </div>
       </div>
